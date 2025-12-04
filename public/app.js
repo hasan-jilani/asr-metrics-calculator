@@ -888,6 +888,50 @@ function resetProviderState() {
     });
 }
 
+// Reset a single provider's state (used when voice changes)
+function resetSingleProviderState(provider) {
+    const state = providerState[provider];
+    if (!state) return;
+    
+    state.ttfa = null;
+    state.firstChunkReceived = false;
+    state.isStreaming = false;
+    state.isBuffering = false;
+    state.isBuffered = false;
+    state.audioChunks = [];
+    state.audioBuffer = null;
+    
+    if (state.sourceNode) {
+        try {
+            state.sourceNode.stop();
+        } catch (e) {
+            // Ignore errors when stopping
+        }
+        state.sourceNode = null;
+    }
+    
+    // Hide play button
+    const playBtn = document.getElementById(`${provider}-play-btn`);
+    if (playBtn) {
+        playBtn.style.display = 'none';
+    }
+    
+    // Hide download button
+    const downloadBtn = document.getElementById(`${provider}-download-btn`);
+    if (downloadBtn) {
+        downloadBtn.style.display = 'none';
+    }
+    
+    // Reset displays
+    const ttfaElement = document.getElementById(`${provider}-ttfa`);
+    if (ttfaElement) {
+        ttfaElement.textContent = '--';
+        ttfaElement.style.color = '#667eea';
+    }
+    
+    updateStatus(provider, 'Voice changed - Click "Start TTS Test" to hear new voice');
+}
+
 // Start TTS test
 function startTTSTest(text) {
     if (!text || text.trim() === '') {
@@ -938,34 +982,6 @@ function startTTSTest(text) {
     }
 }
 
-// Log verdict to backend
-async function logVerdict(provider, verdict) {
-    const state = providerState[provider];
-    
-    try {
-        const response = await fetch('/api/log-verdict', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                provider: provider,
-                text: currentText,
-                verdict: verdict,
-                ttfa: state.ttfa || null
-            })
-        });
-        
-        if (response.ok) {
-            console.log(`Verdict logged: ${provider} - ${verdict}`);
-        } else {
-            console.error('Failed to log verdict');
-        }
-    } catch (error) {
-        console.error('Error logging verdict:', error);
-    }
-}
-
 // Populate challenge dropdown with categorized options
 function populateChallengeDropdown() {
     const challengeSelect = document.getElementById('challenge-select');
@@ -1007,6 +1023,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Challenge select change
     const challengeSelect = document.getElementById('challenge-select');
+    const customText = document.getElementById('custom-text');
     const pronunciationGuide = document.getElementById('pronunciation-guide');
     const pronunciationText = document.getElementById('pronunciation-text');
     
@@ -1014,10 +1031,11 @@ document.addEventListener('DOMContentLoaded', () => {
         challengeSelect.addEventListener('change', (e) => {
             const selectedText = e.target.value;
             if (selectedText) {
-                // Clear custom text
-                const customText = document.getElementById('custom-text');
+                // Clear and disable custom text when pre-set challenge is selected
                 if (customText) {
                     customText.value = '';
+                    customText.disabled = true;
+                    customText.placeholder = 'Select "Select a challenge..." to use custom text';
                 }
                 
                 // Find the selected challenge and show pronunciation
@@ -1040,7 +1058,38 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             } else {
-                // No challenge selected, hide pronunciation guide
+                // No challenge selected, enable custom text
+                if (customText) {
+                    customText.disabled = false;
+                    customText.placeholder = 'Enter custom alphanumeric text to test...';
+                }
+                // Hide pronunciation guide
+                if (pronunciationGuide) {
+                    pronunciationGuide.style.display = 'none';
+                }
+            }
+        });
+    }
+    
+    // Custom text input - clear pre-set challenge when user types
+    if (customText) {
+        customText.addEventListener('input', (e) => {
+            const textValue = e.target.value.trim();
+            if (textValue && challengeSelect) {
+                // Clear pre-set challenge when custom text is entered
+                challengeSelect.value = '';
+                // Hide pronunciation guide
+                if (pronunciationGuide) {
+                    pronunciationGuide.style.display = 'none';
+                }
+            }
+        });
+        
+        // Also handle focus to provide feedback
+        customText.addEventListener('focus', () => {
+            if (challengeSelect && challengeSelect.value) {
+                // Clear pre-set challenge when user focuses on custom text
+                challengeSelect.value = '';
                 if (pronunciationGuide) {
                     pronunciationGuide.style.display = 'none';
                 }
@@ -1066,22 +1115,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // Verdict buttons
-    document.querySelectorAll('.verdict-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const provider = e.target.getAttribute('data-provider');
-            const verdict = e.target.classList.contains('accurate') ? 'Accurate' : 'Inaccurate';
-            
-            logVerdict(provider, verdict);
-            
-            // Visual feedback
-            e.target.style.opacity = '0.6';
-            setTimeout(() => {
-                e.target.style.opacity = '1';
-            }, 500);
-        });
-    });
-    
     // Play buttons
     document.querySelectorAll('.play-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -1097,6 +1130,35 @@ document.addEventListener('DOMContentLoaded', () => {
             downloadAudio(provider);
         });
     });
+    
+    // Voice selector change handlers - reset provider state when voice changes
+    const elevenlabsVoiceSelect = document.getElementById('elevenlabs-voice');
+    if (elevenlabsVoiceSelect) {
+        elevenlabsVoiceSelect.addEventListener('change', () => {
+            resetSingleProviderState('elevenlabs');
+        });
+    }
+    
+    const cartesiaVoiceSelect = document.getElementById('cartesia-voice');
+    if (cartesiaVoiceSelect) {
+        cartesiaVoiceSelect.addEventListener('change', () => {
+            resetSingleProviderState('cartesia');
+        });
+    }
+    
+    const deepgramVoiceSelect = document.getElementById('deepgram-voice');
+    if (deepgramVoiceSelect) {
+        deepgramVoiceSelect.addEventListener('change', () => {
+            resetSingleProviderState('deepgram');
+        });
+    }
+    
+    const rimeVoiceSelect = document.getElementById('rime-voice');
+    if (rimeVoiceSelect) {
+        rimeVoiceSelect.addEventListener('change', () => {
+            resetSingleProviderState('rime');
+        });
+    }
 });
 
 // Download audio as WAV file

@@ -85,6 +85,13 @@ header h1 {
     border-color: #667eea;
 }
 
+#custom-text:disabled {
+    background-color: #f5f5f5;
+    color: #999;
+    cursor: not-allowed;
+    border-color: #d0d0d0;
+}
+
 /* Pronunciation Guide */
 .pronunciation-box {
     width: 100%;
@@ -317,55 +324,6 @@ header h1 {
     transform: none;
 }
 
-/* Verdict Buttons */
-.verdict-section {
-    display: flex;
-    gap: 10px;
-    margin-top: auto;
-}
-
-.verdict-btn {
-    flex: 1;
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.verdict-btn.accurate {
-    background: #4caf50;
-    color: white;
-}
-
-.verdict-btn.accurate:hover {
-    background: #45a049;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
-}
-
-.verdict-btn.inaccurate {
-    background: #f44336;
-    color: white;
-}
-
-.verdict-btn.inaccurate:hover {
-    background: #da190b;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(244, 67, 54, 0.3);
-}
-
-.verdict-btn:active {
-    transform: translateY(0);
-}
-
-.verdict-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none;
-}
 
 /* Start Test Section */
 .start-test-section {
