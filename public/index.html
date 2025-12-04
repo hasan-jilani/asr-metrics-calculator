@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TTS Alphanumeric Comparison Demo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Streaming TTS Alphanumeric Comparison</h1>
+            <p class="subtitle">Compare ElevenLabs Flash v2.5, Cartesia Sonic-3, Deepgram Aura-2, and Rime Mist v2</p>
+        </header>
+
+        <!-- Primary Input Section -->
+        <section class="input-section">
+            <div class="input-group">
+                <label for="challenge-select">Pre-set Challenges:</label>
+                <select id="challenge-select">
+                    <option value="">Select a challenge...</option>
+                    <!-- Options will be populated dynamically by app.js -->
+                </select>
+            </div>
+            <div class="input-group" id="pronunciation-guide" style="display: none;">
+                <label for="pronunciation-text">Expected Pronunciation:</label>
+                <div id="pronunciation-text" class="pronunciation-box"></div>
+            </div>
+            <div class="input-group">
+                <label for="custom-text">Custom Text:</label>
+                <textarea id="custom-text" placeholder="Enter custom alphanumeric text to test..."></textarea>
+            </div>
+        </section>
+
+        <!-- Three Provider Columns -->
+        <section class="providers-section">
+            <!-- ElevenLabs Column -->
+            <div class="provider-column" id="elevenlabs-column">
+                <div class="provider-header">
+                    <h2>ElevenLabs Flash v2.5</h2>
+                </div>
+                <div class="voice-selector">
+                    <label for="elevenlabs-voice">Voice:</label>
+                    <select id="elevenlabs-voice" class="voice-select">
+                        <option value="Smxkoz0xiOoHo5WcSskf">Dexter</option>
+                        <option value="f5HLTX707KIM4SzJYzSz" selected>Brad (default)</option>
+                        <option value="XcXEQzuLXRU9RcfWzEJt">Veda Sky</option>
+                        <option value="CwhRBWXzGAHq8TQ4Fs17">Roger</option>
+                        <option value="SAz9YHcvj6GT2YYXdXww">River</option>
+                    </select>
+                </div>
+                <div class="metrics">
+                    <div class="metric-item">
+                        <label>TTFA:</label>
+                        <span id="elevenlabs-ttfa" class="ttfa-value">--</span>
+                        <span class="unit">ms</span>
+                    </div>
+                </div>
+                <div class="audio-section">
+                    <div class="audio-status" id="elevenlabs-status">Ready</div>
+                    <button id="elevenlabs-play-btn" class="play-btn" data-provider="elevenlabs" style="display: none;">Play ElevenLabs</button>
+                    <button id="elevenlabs-download-btn" class="download-btn" data-provider="elevenlabs" style="display: none;">Download Audio</button>
+                </div>
+                <div class="verdict-section">
+                    <button class="verdict-btn accurate" data-provider="elevenlabs">Accurate</button>
+                    <button class="verdict-btn inaccurate" data-provider="elevenlabs">Inaccurate</button>
+                </div>
+            </div>
+
+            <!-- Cartesia Column -->
+            <div class="provider-column" id="cartesia-column">
+                <div class="provider-header">
+                    <h2>Cartesia Sonic-3</h2>
+                </div>
+                <div class="voice-selector">
+                    <label for="cartesia-voice">Voice:</label>
+                    <select id="cartesia-voice" class="voice-select">
+                        <option value="f786b574-daa5-4673-aa0c-cbe3e8534c02" selected>Katie (default)</option>
+                        <option value="9626c31c-bec5-4cca-baa8-f8ba9e84c8bc">Jacqueline</option>
+                        <option value="a167e0f3-df7e-4d52-a9c3-f949145efdab">Blake</option>
+                        <option value="d46abd1d-2d02-43e8-819f-51fb652c1c61">Grant</option>
+                        <option value="f6ff7c0c-e396-40a9-a70b-f7607edb6937">Emma</option>
+                    </select>
+                </div>
+                <div class="metrics">
+                    <div class="metric-item">
+                        <label>TTFA:</label>
+                        <span id="cartesia-ttfa" class="ttfa-value">--</span>
+                        <span class="unit">ms</span>
+                    </div>
+                </div>
+                <div class="audio-section">
+                    <div class="audio-status" id="cartesia-status">Ready</div>
+                    <button id="cartesia-play-btn" class="play-btn" data-provider="cartesia" style="display: none;">Play Cartesia</button>
+                    <button id="cartesia-download-btn" class="download-btn" data-provider="cartesia" style="display: none;">Download Audio</button>
+                </div>
+                <div class="verdict-section">
+                    <button class="verdict-btn accurate" data-provider="cartesia">Accurate</button>
+                    <button class="verdict-btn inaccurate" data-provider="cartesia">Inaccurate</button>
+                </div>
+            </div>
+
+            <!-- Deepgram Column -->
+            <div class="provider-column" id="deepgram-column">
+                <div class="provider-header">
+                    <h2>Deepgram Aura-2</h2>
+                </div>
+                <div class="voice-selector">
+                    <label for="deepgram-voice">Voice:</label>
+                    <select id="deepgram-voice" class="voice-select">
+                        <option value="aura-2-thalia-en" selected>Thalia (default)</option>
+                        <option value="aura-2-helena-en">Helena</option>
+                        <option value="aura-2-luna-en">Luna</option>
+                        <option value="aura-2-odysseus-en">Odysseus</option>
+                        <option value="aura-2-callista-en">Callista</option>
+                    </select>
+                </div>
+                <div class="metrics">
+                    <div class="metric-item">
+                        <label>TTFA:</label>
+                        <span id="deepgram-ttfa" class="ttfa-value">--</span>
+                        <span class="unit">ms</span>
+                    </div>
+                </div>
+                <div class="audio-section">
+                    <div class="audio-status" id="deepgram-status">Ready</div>
+                    <button id="deepgram-play-btn" class="play-btn" data-provider="deepgram" style="display: none;">Play Deepgram</button>
+                    <button id="deepgram-download-btn" class="download-btn" data-provider="deepgram" style="display: none;">Download Audio</button>
+                </div>
+                <div class="verdict-section">
+                    <button class="verdict-btn accurate" data-provider="deepgram">Accurate</button>
+                    <button class="verdict-btn inaccurate" data-provider="deepgram">Inaccurate</button>
+                </div>
+            </div>
+
+            <!-- Rime Column -->
+            <div class="provider-column" id="rime-column">
+                <div class="provider-header">
+                    <h2>Rime Mist v2</h2>
+                </div>
+                <div class="voice-selector">
+                    <label for="rime-voice">Voice:</label>
+                    <select id="rime-voice" class="voice-select">
+                        <option value="astra" selected>Astra (default)</option>
+                        <option value="cove">Cove</option>
+                        <option value="eucalyptus">Eucalyptus</option>
+                        <option value="lagoon">Lagoon</option>
+                        <option value="mari">Mari</option>
+                    </select>
+                </div>
+                <div class="metrics">
+                    <div class="metric-item">
+                        <label>TTFA:</label>
+                        <span id="rime-ttfa" class="ttfa-value">--</span>
+                        <span class="unit">ms</span>
+                    </div>
+                </div>
+                <div class="audio-section">
+                    <div class="audio-status" id="rime-status">Ready</div>
+                    <button id="rime-play-btn" class="play-btn" data-provider="rime" style="display: none;">Play Rime</button>
+                    <button id="rime-download-btn" class="download-btn" data-provider="rime" style="display: none;">Download Audio</button>
+                </div>
+                <div class="verdict-section">
+                    <button class="verdict-btn accurate" data-provider="rime">Accurate</button>
+                    <button class="verdict-btn inaccurate" data-provider="rime">Inaccurate</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Start Test Button Section -->
+        <section class="start-test-section">
+            <button id="start-test-btn" class="primary-btn">Start TTS Test</button>
+        </section>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+

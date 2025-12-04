@@ -1,44 +1,68 @@
-# ASR Metrics Calculator
+# TTS Alphanumeric Comparison Demo
 
-This project is a web-based, interactive calculator for Word Error Rate (WER), Keyword Error Rate (KER), and Keyword Recognition Rate (KRR). It serves as a lead magnet, providing developers with a hands-on tool and a free code download.
+A full-stack web application to compare Text-to-Speech (TTS) providers for challenging alphanumeric strings, measuring Time-to-First-Audio (TTFA) latency.
 
 ## Features
 
-- **Interactive Calculator:** Paste reference and hypothesis texts to instantly calculate key ASR metrics.
-- **Keyword-Specific Metrics:** Highlight the importance of KER and KRR for business-critical terms.
-- **Templates:** Includes pre-made examples for instant demonstrations.
-- **Lead Capture:** Integrates with HubSpot via a Vercel Serverless Function to capture leads.
-- **Fully Responsive:** Designed with Tailwind CSS for a great experience on any device.
+- Compare 4 TTS providers: ElevenLabs Flash v2.5, Cartesia Sonic-3, Deepgram Aura-2, and Rime Mist v2
+- Real-time streaming audio with WebSocket support
+- TTFA (Time-to-First-Audio) latency measurement
+- Voice selection for each provider
+- Audio download functionality
+- Pre-set alphanumeric challenges with pronunciation guides
 
-## Getting Started
+## Setup
 
-### 1. Installation
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Create a `.env` file with your API keys:
+   ```
+   ELEVENLABS_API_KEY=your_key_here
+   CARTESIA_API_KEY=your_key_here
+   DEEPGRAM_API_KEY=your_key_here
+   RIME_API_KEY=your_key_here
+   PORT=3000
+   ```
+4. Start the server: `npm start`
+5. Open http://localhost:3000 in your browser
 
-Clone this repository and install dependencies:
+## Deployment
 
-```bash
-git clone https://github.com/your-username/asr-metrics-calculator.git
-cd asr-metrics-calculator
-npm install
-```
+### Render (Recommended)
 
-### 2. Running Locally
+1. Push your code to GitHub
+2. Go to [Render.com](https://render.com) and create a new Web Service
+3. Connect your GitHub repository
+4. Configure:
+   - **Build Command**: `npm install`
+   - **Start Command**: `node server.js`
+   - **Environment**: Node
+5. Add environment variables in the Render dashboard
+6. Deploy!
 
-To start the development server, run:
+### Railway
 
-```bash
-npm run dev
-```
+1. Push to GitHub
+2. Go to [Railway.app](https://railway.app)
+3. New Project → Deploy from GitHub
+4. Add environment variables
+5. Deploy
 
-The app will be available at `http://localhost:5173`.
+### Fly.io
 
-### 3. Deploying to Vercel
+1. Install Fly CLI: `curl -L https://fly.io/install.sh | sh`
+2. Run `fly launch` in your project
+3. Set secrets: `fly secrets set ELEVENLABS_API_KEY=...` (repeat for each)
+4. Deploy: `fly deploy`
 
-1.  Create a new Vercel project and connect it to your Git repository.
-2.  Add the necessary environment variables for the HubSpot integration:
-    -   `HUBSPOT_API_KEY`: Your private app access token.
-3.  Vercel will automatically build and deploy the application on every push to the `main` branch.
+## Important Notes
 
-## HubSpot Integration
+- **WebSocket Support Required**: Make sure your hosting platform supports WebSockets
+- **Environment Variables**: Never commit your `.env` file. Add API keys in the platform's environment variable settings
+- **Port**: The app uses `process.env.PORT` for cloud platforms (defaults to 3000 locally)
 
-The project includes a serverless function (`api/submit-form.js`) that securely handles form submissions and sends the data to your HubSpot account. You will need to configure your HubSpot `portalId` and `formId` directly in the `submit-form.js` file. 
+## Tech Stack
+
+- **Backend**: Node.js, Express, WebSocket (ws)
+- **Frontend**: Vanilla JavaScript, HTML, CSS
+- **APIs**: ElevenLabs, Cartesia, Deepgram, Rime
