@@ -1,78 +1,102 @@
 // Pre-set challenge test cases organized by category
 const CHALLENGES = {
-    'Ambiguous / Mixed Identifiers': [
-        { text: 'Your Case ID is F0L1X0E.', description: 'Mixed alphanumeric identifier with zeros and letters', pronunciation: 'F, zero, L, one, X, zero, E.' },
-        { text: 'The system shows your authentication token as B0D5V2N.', description: 'Alphanumeric token with zeros', pronunciation: 'B, zero, D, five, V, two, N.' },
-        { text: 'The reference number associated with your request is O30DV87.', description: 'Mixed identifier starting with letter', pronunciation: 'O, three, zero, D, V, eight, seven.' },
-        { text: 'Your temporary login password is P@ssw0rd123.', description: 'Password with special characters and alphanumerics', pronunciation: 'P, at, S, S, W, zero, R, D, one, two, three.' }
+    'ADDRESSES': [
+        { text: 'Your delivery address is 123 Pine St., Springfield, IL 62704.', pronunciation: 'one twenty-three Pine Street, Springfield, Illinois, six, two, seven, zero, four' },
+        { text: 'The service record shows your location as 4500 North Lake Shore Dr., Chicago, IL.', pronunciation: 'forty-five hundred North Lake Shore Drive, Chicago, Illinois' },
+        { text: 'I have your address as 101 E. 1st St., Apt. 2B, New York, NY 10009.', pronunciation: 'one oh one East First Street, apartment two B, New York, New York, one, zero, zero, zero, nine' },
+        { text: 'Your billing location is 608 Birch Ter., Fairview, FL 32067.', pronunciation: 'six oh eight Birch Terrace, Fairview, Florida, three, two, zero, six, seven' },
+        { text: 'The technician is scheduled to arrive at 269 Elm Pkwy., Lansing, TX 16261.', pronunciation: 'two sixty-nine Elm Parkway, Lansing, Texas, one, six, two, six, one' },
+        { text: 'Your profile lists your mailing address as 55 W. 3rd Ave., San Mateo, CA 94401.', pronunciation: 'fifty-five West Third Avenue, San Mateo, California, nine, four, four, zero, one' },
+        { text: 'I\'m confirming the address: 742 Evergreen Terrace, Springfield, OR 97403.', pronunciation: 'seven forty-two Evergreen Terrace, Springfield, Oregon, nine, seven, four, zero, three' },
+        { text: 'Your contact information includes 88 S. 21st Ct., Phoenix, AZ 85004.', pronunciation: 'eighty-eight South Twenty-first Court, Phoenix, Arizona, eight, five, zero, zero, four' },
+        { text: 'Please verify the location: 1 Queen St. W., Toronto, ON M5H 2N2.', pronunciation: 'one Queen Street West, Toronto, Ontario, M, five, H, two, N, two' },
+        { text: 'Your international address is listed as 10 Downing St., London SW1A 2AA, UK.', pronunciation: 'ten Downing Street, London, S, W, one, A, two, A, A, United Kingdom' },
+        { text: 'The PO Box on file is PO Box 145, Raleigh, NC 27602.', pronunciation: 'P O Box one forty-five, Raleigh, North Carolina, two, seven, six, zero, two' },
+        { text: 'Your rural route address appears as RR 2 Box 18, Madison, WI 53718.', pronunciation: 'R R two Box eighteen, Madison, Wisconsin, five, three, seven, one, eight' }
     ],
-    'Contiguous SKUs / Product Codes': [
-        { text: 'The part number you requested is 326DART4.', description: 'Product code with mixed alphanumerics', pronunciation: 'Three, two, six, D, A, R, T, four.' },
-        { text: 'I found the product with SKU K700L2V.', description: 'SKU code with letters and numbers', pronunciation: 'K, seven, zero, zero, L, two, V.' },
-        { text: 'Your replacement component is listed as 443B90A.', description: 'Component code identifier', pronunciation: 'Four, four, three, B, nine, zero, A.' }
+    'MIXED ALPHANUMERIC IDENTIFIERS': [
+        { text: 'Your case ID is F0L1X0E.', pronunciation: 'F, zero, L, one, X, zero, E' },
+        { text: 'I\'m seeing your authentication token as B0D5V2N.', pronunciation: 'B, zero, D, five, V, two, N' },
+        { text: 'The reference number for your request is O30DV87.', pronunciation: 'O, three, zero, D, V, eight, seven' },
+        { text: 'Your temporary access code is P@ssw0rd123.', pronunciation: 'P, at, S, S, W, zero, R, D, one, two, three' },
+        { text: 'Your session identifier appears as 01A07C9X.', pronunciation: 'zero, one, A, zero, seven, C, nine, X' },
+        { text: 'I have your customer ID as X9T0F7Q1.', pronunciation: 'X, nine, T, zero, F, seven, Q, one' },
+        { text: 'The system lists your approval code as 8L2Z51O4.', pronunciation: 'eight, L, two, Z, five, one, O, four' },
+        { text: 'Your authorization string is H3L0-2X9.', pronunciation: 'H, three, L, zero, dash, two, X, nine' },
+        { text: 'The request hash shows as ZF1-98T-2B7.', pronunciation: 'Z, F, one, dash, nine, eight, T, dash, two, B, seven' },
+        { text: 'Your login token is displayed as A1B2C3D4.', pronunciation: 'A, one, B, two, C, three, D, four' },
+        { text: 'The platform shows your renewal key as 22L0I55Z.', pronunciation: 'two, two, L, zero, I, five, five, Z' },
+        { text: 'Your secure key is 5XQ27P.', pronunciation: 'five, X, Q, two, seven, P' }
     ],
-    'Tracking & Logistics': [
-        { text: 'Your tracking number is 1Z9999E90000000057.', description: 'Long tracking number with letters and digits', pronunciation: 'One, Z, nine, nine, nine, nine, E, nine, zero, zero, zero, zero, zero, zero, zero, zero, five, seven.' },
-        { text: 'The FedEx door tag on your shipment is DT120034567890.', description: 'Door tag with prefix and numbers', pronunciation: 'D, T, one, two, zero, zero, three, four, five, six, seven, eight, nine, zero.' },
-        { text: 'Your shipment reference code is TX-790-B4.', description: 'Reference code with hyphens', pronunciation: 'T, X, seven, nine, zero, B, four.' }
+    'SKUs / PRODUCT CODES': [
+        { text: 'The part number you requested is 326DART4.', pronunciation: 'three, two, six, D, A, R, T, four' },
+        { text: 'I found your product under SKU K700L2V.', pronunciation: 'K, seven, zero, zero, L, two, V' },
+        { text: 'Your replacement component is listed as 443B90A.', pronunciation: 'four, four, three, B, nine, zero, A' },
+        { text: 'The catalog shows product code AB-4500.', pronunciation: 'A, B, dash, four, five, zero, zero' },
+        { text: 'Your warranty part is referenced as RX1000.', pronunciation: 'R, X, one, zero, zero, zero' },
+        { text: 'The inventory sheet lists lot number LOT20240315B.', pronunciation: 'L, O, T, two, zero, two, four, zero, three, one, five, B' },
+        { text: 'The spare component is marked as A12-B34-C56.', pronunciation: 'A, one, two, dash, B, three, four, dash, C, five, six' },
+        { text: 'The warehouse record shows item 45R-90X.', pronunciation: 'four, five, R, dash, nine, zero, X' },
+        { text: 'Your filter element is labeled V3.2L.', pronunciation: 'V, three, point, two, L' },
+        { text: 'I have the component code XL-B2.', pronunciation: 'X, L, dash, B, two' },
+        { text: 'Your package identifier is BATCH-24-07-19.', pronunciation: 'B, A, T, C, H, dash, two, four, dash, zero, seven, dash, one, nine' },
+        { text: 'The part variation on file is H10-Z2.', pronunciation: 'H, one, zero, dash, Z, two' }
     ],
-    'Financial / Account Retrieval': [
-        { text: 'Your account number is 021000021.', description: 'Account number with leading zero', pronunciation: 'Zero, two, one, zero, zero, zero, zero, two, one.' },
-        { text: 'The routing number on file is 11000015.', description: 'Bank routing number', pronunciation: 'One, one, zero, zero, zero, zero, one, five.' },
-        { text: 'Your total today is $12.99 USD.', description: 'Currency amount with USD', pronunciation: 'Twelve dollars and ninety-nine cents.' },
-        { text: 'The applicable tax rate is 9.75%.', description: 'Percentage with decimal', pronunciation: 'Nine point seven five percent.' },
-        { text: 'According to the report, the athlete signed a contract for $5.7M.', description: 'Currency amount with millions', pronunciation: 'Five point seven million dollars.' },
-        { text: 'The menu shows that the drink costs $2.09.', description: 'Currency amount with cents', pronunciation: 'Two dollars and nine cents.' },
-        { text: 'A movie ticket now costs $7.49.', description: 'Currency amount with cents', pronunciation: 'Seven dollars and forty-nine cents.' }
+    'TRACKING & LOGISTICS CODES': [
+        { text: 'Your UPS tracking number is 1Z9999E90000000057.', pronunciation: 'one, Z, nine, nine, nine, nine, E, nine, zero, zero, zero, zero, zero, zero, zero, zero, five, seven' },
+        { text: 'The FedEx door tag on your shipment is DT120034567890.', pronunciation: 'D, T, one, two, zero, zero, three, four, five, six, seven, eight, nine, zero' },
+        { text: 'Your USPS tracking number shows as 9405511899223847621034.', pronunciation: 'nine, four, zero, five, five, one, one, eight, nine, nine, two, two, three, eight, four, seven, six, two, one, zero, three, four' },
+        { text: 'The shipment reference is TX-790-B4.', pronunciation: 'T, X, dash, seven, nine, zero, dash, B, four' },
+        { text: 'Your parcel ID appears as SHP2300456A.', pronunciation: 'S, H, P, two, three, zero, zero, four, five, six, A' },
+        { text: 'The return authorization code is REF-2024-AB21.', pronunciation: 'R, E, F, dash, two, zero, two, four, dash, A, B, two, one' },
+        { text: 'I\'m seeing your delivery code as EX123456789US.', pronunciation: 'E, X, one, two, three, four, five, six, seven, eight, nine, U, S' },
+        { text: 'Your pallet label is marked LX-45-003.', pronunciation: 'L, X, dash, four, five, dash, zero, zero, three' },
+        { text: 'The freight record shows identifier FRG20240719X.', pronunciation: 'F, R, G, two, zero, two, four, zero, seven, one, nine, X' },
+        { text: 'Your logistics record includes 7771-9932-4410.', pronunciation: 'seven, seven, seven, one, dash, nine, nine, three, two, dash, four, four, one, zero' },
+        { text: 'I have the carrier reference as GX99P00412.', pronunciation: 'G, X, nine, nine, P, zero, zero, four, one, two' },
+        { text: 'Your shipment tag is 2Z45X09E0012345678.', pronunciation: 'two, Z, four, five, X, zero, nine, E, zero, zero, one, two, three, four, five, six, seven, eight' }
     ],
-    'Address Retrieval': [
-        { text: 'Your mailing address is 123 N. 15th St. Unit B6.', description: 'Address with ordinal and unit', pronunciation: 'One twenty-three North fifteenth Street, Unit B six.' },
-        { text: 'The location we have on file is 4500 N. Lake Shore Dr.', description: 'Address with direction abbreviation', pronunciation: 'Forty-five hundred North Lake Shore Drive.' },
-        { text: 'Your shipping address is 101 E. 1st St. Apt. 2B.', description: 'Address with ordinal and apartment', pronunciation: 'One oh one East First Street, Apartment two B.' },
-        { text: 'Your delivery address on file is 608 Birch Ter, Fairview, FL 32067.', description: 'Address with terrace abbreviation and state', pronunciation: 'Six oh eight Birch terrace, Fairview, Florida three two zero six seven.' },
-        { text: 'The service technician is scheduled to visit 269 Elm Pkwy., Lansing, TX 16261.', description: 'Address with parkway abbreviation and state', pronunciation: 'Two six nine Elm parkway, Lansing, Texas one six two six one.' },
-        { text: 'Your billing address is listed as 119 Pine St, Greenville, MI 31407.', description: 'Address with street and state', pronunciation: 'One nineteen Pine street, Greenville, Michigan three one four zero seven.' }
+    'NUMERIC FORMATS': [
+        { text: 'Your total today is $12.99.', pronunciation: 'twelve dollars and ninety-nine cents' },
+        { text: 'The charge on your card is $2.09.', pronunciation: 'two dollars and nine cents' },
+        { text: 'The contract amount is $5.7M.', pronunciation: 'five point seven million dollars' },
+        { text: 'Your subscription fee is €18.50.', pronunciation: 'eighteen euros and fifty cents' },
+        { text: 'The balance due is £1.25.', pronunciation: 'one pound and twenty-five pence' },
+        { text: 'Your account number is 021000021.', pronunciation: 'zero, two, one, zero, zero, zero, zero, two, one' },
+        { text: 'The routing number on file is 11000015.', pronunciation: 'one, one, zero, zero, zero, zero, one, five' },
+        { text: 'The applicable tax rate is 9.75%.', pronunciation: 'nine point seven five percent' },
+        { text: 'Your discount is listed as 0.01%.', pronunciation: 'zero point zero one percent' },
+        { text: 'Your contact number is 800-555-1212.', pronunciation: 'eight, zero, zero, five, five, five, one, two, one, two' },
+        { text: 'I have your number as 8005551212.', pronunciation: 'eight, zero, zero, five, five, five, one, two, one, two' },
+        { text: 'Your international contact number is +44 20 7946 0018.', pronunciation: 'plus, four, four, two, zero, seven, nine, four, six, zero, zero, one, eight' }
     ],
-    'General Verification Codes': [
-        { text: 'Just to confirm, the code you provided is 65DH9.', description: 'Verification code with digits and letters', pronunciation: 'Six, five, D, H, nine.' },
-        { text: 'I heard your verification code as 6-5-D-H-9. Is that correct?', description: 'Spelled out verification code with hyphens', pronunciation: 'Six, five, D, H, nine.' },
-        { text: 'Let me repeat that back: your reference ID is T2025A04X.', description: 'Reference ID with mixed format', pronunciation: 'T, two, zero, two, five, A, zero, four, X.' }
+    'URLs / EMAILS / FILES': [
+        { text: 'You can access the documentation at dg.com/API_v2.', pronunciation: 'D, G, dot, com, slash, A, P, I, underscore, V, two' },
+        { text: 'Please sign in at support.dg.com/v3/login.', pronunciation: 'support, dot, D, G, dot, com, slash, V, three, slash, login' },
+        { text: 'The website on file is airtel.in.', pronunciation: 'airtel, dot, I, N' },
+        { text: 'Your profile is listed under example.co.uk.', pronunciation: 'example, dot, C, O, dot, U, K' },
+        { text: 'You can review the API reference at docs.aws.amazon.com/lambda/latest/APIReference.', pronunciation: 'docs, dot, A, W, S, dot, amazon, dot, com, slash, lambda, slash, latest, slash, A, P, I, Reference' },
+        { text: 'Your support contact is support@help.br.', pronunciation: 'support, at, help, dot, B, R' },
+        { text: 'Please send attachments to help@barclays.co.uk.', pronunciation: 'help, at, barclays, dot, C, O, dot, U, K' },
+        { text: 'Your notification email is john.doe@company.io.', pronunciation: 'john, dot, doe, at, company, dot, I, O' },
+        { text: 'Your alternate contact is billing+alerts@service.net.', pronunciation: 'billing, plus, alerts, at, service, dot, net' },
+        { text: 'Your file is saved as Report_Q3_24.pdf.', pronunciation: 'Report, underscore, Q, three, underscore, two, four, dot, P, D, F' },
+        { text: 'The exported report is Invoice_2024-07-15.csv.', pronunciation: 'Invoice, underscore, two, zero, two, four, dash, zero, seven, dash, one, five, dot, C, S, V' },
+        { text: 'The backup file is named Data.backup.tar.gz.', pronunciation: 'Data, dot, backup, dot, tar, dot, G, Z' }
     ],
-    'Phone Numbers & Extensions': [
-        { text: 'I have your number as 800-555-1212 ext. 450.', description: 'Phone number with extension', pronunciation: 'Eight hundred, five five five, twelve twelve, extension four five zero.' },
-        { text: 'You said your contact number is 8005551212. Is that right?', description: 'Phone number without formatting', pronunciation: 'Eight hundred, five five five, twelve twelve.' }
-    ],
-    'Addresses for Confirmation': [
-        { text: 'And the unit you mentioned is listed as Unit B6.', description: 'Unit identifier confirmation', pronunciation: 'Unit B six.' },
-        { text: 'Just confirming your address: 101 E. 1st St. Apt. 2B.', description: 'Full address confirmation', pronunciation: 'One oh one East First Street, Apartment two B.' }
-    ],
-    'Alpha-Heavy Confirmations': [
-        { text: 'Your case number is T-X-790.', description: 'Case number with hyphens', pronunciation: 'T, X, seven, nine, zero.' },
-        { text: 'The component code you referenced is A2-B7.', description: 'Component code with hyphens', pronunciation: 'A, two, B, seven.' }
-    ],
-    'URLs / API Paths': [
-        { text: 'You can access the API documentation at dg.com/API_v2.', description: 'URL with underscore and version', pronunciation: 'D G dot com slash A P I underscore V two.' },
-        { text: 'Please sign in at support.dg.com/v3/login.', description: 'Subdomain URL with path', pronunciation: 'Support dot D G dot com slash V three slash login.' },
-        { text: 'For support, you can reach us at support@help.br, visit airtel.in, or email help@barclays.co.uk.', description: 'Email addresses and URLs with country codes', pronunciation: 'Support at help dot B R, visit airtel dot I N, or email help at barclays dot C O dot U K.' }
-    ],
-    'Files / Documents': [
-        { text: 'The file you need is named Report_Q3_24.pdf.', description: 'Filename with underscore and date', pronunciation: 'Report underscore Q three twenty-four dot P D F.' },
-        { text: 'Your exported report is stored as Invoice_2024-07-15.csv.', description: 'Filename with date format', pronunciation: 'Invoice underscore twenty-twenty-four dash zero seven dash fifteen dot C S V.' }
-    ],
-    'Software / Version Numbers': [
-        { text: 'You\'re currently running version v3.5 SP1.', description: 'Version with service pack', pronunciation: 'Version three point five S P one.' },
-        { text: 'The system build you\'re on is Build 14.2.7.', description: 'Build number with dots', pronunciation: 'Build fourteen point two point seven.' }
-    ],
-    'Chemicals / Technical Codes': [
-        { text: 'The chemical identifier listed here is H2O2.', description: 'Chemical formula with subscript numbers', pronunciation: 'H, two, O, two.' },
-        { text: 'Your material classification code is A2-B7.', description: 'Material code with hyphens', pronunciation: 'A, two, B, seven.' }
-    ],
-    'Forced-Challenge / High-Stakes Character Mode': [
-        { text: 'Your secure key is 5XQ27P.', description: 'Short alphanumeric secure key', pronunciation: 'Five, X, Q, two, seven, P.' }
-    ],
-    'Time / Duration': [
-        { text: 'Please make sure the task is finished by 03:00pm.', description: 'Time format with PM', pronunciation: 'Three P M.' },
-        { text: 'According to the maintenance notice, the work will take 10 hrs and 15 mins to complete.', description: 'Time duration with hours and minutes', pronunciation: 'Ten hours and fifteen minutes' }
+    'TECHNICAL CODES': [
+        { text: 'You\'re currently running version v3.5 SP1.', pronunciation: 'V, three, point, five, S, P, one' },
+        { text: 'Your system build is listed as Build 14.2.7.', pronunciation: 'fourteen, point, two, point, seven' },
+        { text: 'The release installed is Release-2024.07.31-beta.', pronunciation: 'Release, dash, two, zero, two, four, point, zero, seven, point, three, one, dash, beta' },
+        { text: 'Your firmware version shows as FW-2.9.14.', pronunciation: 'F, W, dash, two, point, nine, point, one, four' },
+        { text: 'The installed patch is Patch-1.0.3.', pronunciation: 'Patch, dash, one, point, zero, point, three' },
+        { text: 'Your chemical identifier is H2O2.', pronunciation: 'H, two, O, two' },
+        { text: 'The solution is labeled C6H12O6.', pronunciation: 'C, six, H, one, two, O, six' },
+        { text: 'The material listed is NaCl.', pronunciation: 'N, a, C, l' },
+        { text: 'Your reagent code is NH4NO3.', pronunciation: 'N, H, four, N, O, three' },
+        { text: 'Your material classification code is A2-B7.', pronunciation: 'A, two, dash, B, seven' },
+        { text: 'The compliance standard is ISO9001:2015.', pronunciation: 'I, S, O, nine, zero, zero, one, two, zero, one, five' },
+        { text: 'Your item is categorized under HS Code 8471.', pronunciation: 'eight, four, seven, one' }
     ]
 };
 
@@ -881,7 +905,7 @@ function resetProviderState() {
         const ttfaElement = document.getElementById(`${provider}-ttfa`);
         if (ttfaElement) {
             ttfaElement.textContent = '--';
-            ttfaElement.style.color = '#667eea';
+            ttfaElement.style.color = '#13EF93';
         }
         
         updateStatus(provider, 'Ready');
@@ -1004,7 +1028,6 @@ function populateChallengeDropdown() {
             option.value = challenge.text;
             // Display text includes the number prefix for UI reference only
             option.textContent = `${challengeNumber}. ${challenge.text}`;
-            option.title = challenge.description; // Tooltip with description
             optgroup.appendChild(option);
             challengeNumber++;
         });
@@ -1031,6 +1054,12 @@ document.addEventListener('DOMContentLoaded', () => {
         challengeSelect.addEventListener('change', (e) => {
             const selectedText = e.target.value;
             if (selectedText) {
+                // Check if this is a different text than what was last tested
+                if (currentText && selectedText !== currentText) {
+                    // Text changed - reset all providers to indicate new test needed
+                    resetProviderState();
+                }
+                
                 // Clear and disable custom text when pre-set challenge is selected
                 if (customText) {
                     customText.value = '';
@@ -1076,11 +1105,22 @@ document.addEventListener('DOMContentLoaded', () => {
         customText.addEventListener('input', (e) => {
             const textValue = e.target.value.trim();
             if (textValue && challengeSelect) {
+                // Check if this is a different text than what was last tested
+                if (currentText && textValue !== currentText) {
+                    // Text changed - reset all providers to indicate new test needed
+                    resetProviderState();
+                }
+                
                 // Clear pre-set challenge when custom text is entered
                 challengeSelect.value = '';
                 // Hide pronunciation guide
                 if (pronunciationGuide) {
                     pronunciationGuide.style.display = 'none';
+                }
+            } else if (!textValue) {
+                // Custom text was cleared - reset providers
+                if (currentText) {
+                    resetProviderState();
                 }
             }
         });
@@ -1093,6 +1133,68 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (pronunciationGuide) {
                     pronunciationGuide.style.display = 'none';
                 }
+            }
+        });
+    }
+    
+    // Generate random challenge button
+    const generateRandomBtn = document.getElementById('generate-random-btn');
+    if (generateRandomBtn) {
+        generateRandomBtn.addEventListener('click', async () => {
+            // Disable button while generating
+            generateRandomBtn.disabled = true;
+            generateRandomBtn.textContent = '🔄 Generating...';
+            
+            try {
+                const response = await fetch('/api/generate-random-challenge', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Failed to generate challenge');
+                }
+                
+                const data = await response.json();
+                
+                // Clear pre-set challenge selection
+                if (challengeSelect) {
+                    challengeSelect.value = '';
+                }
+                
+                // Enable and populate custom text field
+                if (customText) {
+                    customText.disabled = false;
+                    customText.value = data.text;
+                    customText.placeholder = 'Enter custom alphanumeric text to test...';
+                }
+                
+                // Show pronunciation guide
+                if (pronunciationGuide) {
+                    pronunciationGuide.style.display = 'block';
+                }
+                if (pronunciationText) {
+                    pronunciationText.textContent = data.pronunciation;
+                }
+                
+                // Reset providers since we have new text
+                resetProviderState();
+                
+                // Scroll to custom text field to show the generated challenge
+                if (customText) {
+                    customText.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                
+            } catch (error) {
+                console.error('Error generating random challenge:', error);
+                alert(`Failed to generate random challenge: ${error.message}`);
+            } finally {
+                // Re-enable button
+                generateRandomBtn.disabled = false;
+                generateRandomBtn.textContent = 'Generate Random Challenge';
             }
         });
     }

@@ -956,9 +956,118 @@ app.get('/api/health', (req, res) => {
       elevenlabs: !!process.env.ELEVENLABS_API_KEY,
       cartesia: !!process.env.CARTESIA_API_KEY,
       deepgram: !!process.env.DEEPGRAM_API_KEY,
-      rime: !!process.env.RIME_API_KEY
+      rime: !!process.env.RIME_API_KEY,
+      openai: !!process.env.OPENAI_API_KEY
     }
   });
+});
+
+// Generate random challenge using OpenAI
+app.post('/api/generate-random-challenge', async (req, res) => {
+  const openaiApiKey = process.env.OPENAI_API_KEY;
+  
+  if (!openaiApiKey) {
+    return res.status(500).json({ 
+      error: 'OpenAI API key not configured' 
+    });
+  }
+
+  try {
+    // Sample challenges from each category to guide the AI
+    const sampleChallenges = [
+      { category: 'ADDRESSES', example: 'Your delivery address is 123 Pine St., Springfield, IL 62704.' },
+      { category: 'MIXED ALPHANUMERIC IDENTIFIERS', example: 'Your case ID is F0L1X0E.' },
+      { category: 'SKUs / PRODUCT CODES', example: 'The part number you requested is 326DART4.' },
+      { category: 'TRACKING & LOGISTICS CODES', example: 'Your UPS tracking number is 1Z9999E90000000057.' },
+      { category: 'NUMERIC FORMATS', example: 'Your total today is $12.99.' },
+      { category: 'URLs / EMAILS / FILES', example: 'You can access the documentation at dg.com/API_v2.' },
+      { category: 'TECHNICAL CODES', example: 'You\'re currently running version v3.5 SP1.' }
+    ];
+
+    // Randomly select a category
+    const selectedCategory = sampleChallenges[Math.floor(Math.random() * sampleChallenges.length)];
+
+    const prompt = `Generate a text-to-speech challenge sentence similar to this example from the "${selectedCategory.category}" category:
+
+Example: "${selectedCategory.example}"
+
+Requirements:
+1. Create a sentence that contains alphanumeric characters, numbers, codes, or identifiers that are challenging for TTS systems
+2. The sentence should be natural and conversational (like customer service or system messages)
+3. Include the expected pronunciation guide showing how numbers, letters, and special characters should be spoken
+4. Format your response as JSON with two fields: "text" (the challenge sentence) and "pronunciation" (comma-separated pronunciation guide)
+
+Example format:
+{
+  "text": "Your tracking number is 1Z9999E90000000057.",
+  "pronunciation": "one, Z, nine, nine, nine, nine, E, nine, zero, zero, zero, zero, zero, zero, zero, zero, five, seven"
+}
+
+Generate a NEW challenge (different from the example) in the same style:`;
+
+    const response = await axios.post(
+      'https://api.openai.com/v1/chat/completions',
+      {
+        model: 'gpt-4o-mini',
+        messages: [
+          {
+            role: 'system',
+            content: 'You are a helpful assistant that generates text-to-speech evaluation challenges. Always respond with VALID JSON ONLY, with no additional commentary or text outside the JSON.\n\nYour job is to generate realistic, conversational challenge sentences that include complex alphanumeric elements commonly encountered in customer-service or enterprise scenarios.\n\nThe generated challenge must be compatible with ANY of the following categories:\n\n1. Mixed Alphanumeric Identifiers (e.g., F0L1X0E, O30DV87, A1B2C3D4)\n2. SKUs / Product Codes (e.g., 326DART4, AB-4500, V3.2L)\n3. Tracking & Logistics Numbers (e.g., 1Z9999E90000000057, DT120034567890, TX-790-B4)\n4. Financial & Numeric Formats (currency amounts, routing numbers, account numbers, percentages)\n5. Addresses (full addresses with street names, ordinals, directionals, units, cities, states, ZIP/postal codes)\n6. URLs, Emails, API Paths, and Filenames (e.g., support.dg.com/v3/login, help@barclays.co.uk, Invoice_2024-07-15.csv)\n7. Technical Codes (software versions, build numbers, chemical formulas, classification codes)\n8. Phone Numbers & Extensions\n\nEach response must:\n- Contain a single JSON object with two fields:\n    • "text": a natural-sounding sentence that includes one or more alphanumeric expressions.\n    • "pronunciation": a comma-separated pronunciation guide showing EXACTLY how a human would speak the alphanumeric expression(s).\n\nPRONUNCIATION RULES:\n• Letters are spoken individually (e.g., "A", "B", "C")\n• Digits are spoken individually ("one", "zero", "five")\n• Hyphens in identifiers (codes, SKUs, tracking numbers, filenames, version strings, URLs) are spoken as "dash"\n• Hyphens in natural-language numbers (dates, phone numbers, addresses) are NOT spoken\n• Underscores → "underscore"\n• Periods → "dot"\n• Slashes → "slash"\n• @ → "at"\n• + in emails or identifiers → "plus"\n• Postal codes spoken digit-by-digit\n• Addresses must be spoken naturally ("one twenty-three Pine Street, Springfield, Illinois")\n• Currency amounts must use units ("twelve dollars and ninety-nine cents", "eighteen euros and fifty cents", "one pound and twenty-five pence", "five point seven million dollars")\n• Percentages must end with "percent"\n\nRESPONSE FORMAT:\n{\n  "text": "<sentence>",\n  "pronunciation": "<spoken form>"\n}\n\nGenerate one NEW challenge per request.'
+          },
+          {
+            role: 'user',
+            content: prompt
+          }
+        ],
+        temperature: 0.8,
+        max_tokens: 300
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${openaiApiKey}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+
+    const aiResponse = response.data.choices[0].message.content.trim();
+    
+    // Parse the JSON response
+    let challengeData;
+    try {
+      // Sometimes the response might be wrapped in markdown code blocks
+      const cleanedResponse = aiResponse.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+      challengeData = JSON.parse(cleanedResponse);
+    } catch (parseError) {
+      console.error('Error parsing OpenAI response:', parseError);
+      console.error('Raw response:', aiResponse);
+      return res.status(500).json({ 
+        error: 'Failed to parse AI response',
+        details: aiResponse
+      });
+    }
+
+    // Validate the response has required fields
+    if (!challengeData.text || !challengeData.pronunciation) {
+      return res.status(500).json({ 
+        error: 'Invalid response format from AI',
+        details: challengeData
+      });
+    }
+
+    res.json({
+      text: challengeData.text,
+      pronunciation: challengeData.pronunciation,
+      category: selectedCategory.category
+    });
+
+  } catch (error) {
+    console.error('Error generating random challenge:', error);
+    res.status(500).json({ 
+      error: 'Failed to generate random challenge',
+      details: error.response?.data || error.message
+    });
+  }
 });
 
 // Serve index.html for root route
@@ -974,5 +1083,6 @@ server.listen(PORT, () => {
   console.log(`  Cartesia: ${process.env.CARTESIA_API_KEY ? '✓' : '✗'}`);
   console.log(`  Deepgram: ${process.env.DEEPGRAM_API_KEY ? '✓' : '✗'}`);
   console.log(`  Rime: ${process.env.RIME_API_KEY ? '✓' : '✗'}`);
+  console.log(`  OpenAI: ${process.env.OPENAI_API_KEY ? '✓' : '✗'}`);
 });
 
