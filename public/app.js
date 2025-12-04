@@ -1,19 +1,5 @@
 // Pre-set challenge test cases organized by category
 const CHALLENGES = {
-    'ADDRESSES': [
-        { text: 'Your delivery address is 123 Pine St., Springfield, IL 62704.', pronunciation: 'one twenty-three Pine Street, Springfield, Illinois, six, two, seven, zero, four' },
-        { text: 'The service record shows your location as 4500 North Lake Shore Dr., Chicago, IL.', pronunciation: 'forty-five hundred North Lake Shore Drive, Chicago, Illinois' },
-        { text: 'I have your address as 101 E. 1st St., Apt. 2B, New York, NY 10009.', pronunciation: 'one oh one East First Street, apartment two B, New York, New York, one, zero, zero, zero, nine' },
-        { text: 'Your billing location is 608 Birch Ter., Fairview, FL 32067.', pronunciation: 'six oh eight Birch Terrace, Fairview, Florida, three, two, zero, six, seven' },
-        { text: 'The technician is scheduled to arrive at 269 Elm Pkwy., Lansing, TX 16261.', pronunciation: 'two sixty-nine Elm Parkway, Lansing, Texas, one, six, two, six, one' },
-        { text: 'Your profile lists your mailing address as 55 W. 3rd Ave., San Mateo, CA 94401.', pronunciation: 'fifty-five West Third Avenue, San Mateo, California, nine, four, four, zero, one' },
-        { text: 'I\'m confirming the address: 742 Evergreen Terrace, Springfield, OR 97403.', pronunciation: 'seven forty-two Evergreen Terrace, Springfield, Oregon, nine, seven, four, zero, three' },
-        { text: 'Your contact information includes 88 S. 21st Ct., Phoenix, AZ 85004.', pronunciation: 'eighty-eight South Twenty-first Court, Phoenix, Arizona, eight, five, zero, zero, four' },
-        { text: 'Please verify the location: 1 Queen St. W., Toronto, ON M5H 2N2.', pronunciation: 'one Queen Street West, Toronto, Ontario, M, five, H, two, N, two' },
-        { text: 'Your international address is listed as 10 Downing St., London SW1A 2AA, UK.', pronunciation: 'ten Downing Street, London, S, W, one, A, two, A, A, United Kingdom' },
-        { text: 'The PO Box on file is PO Box 145, Raleigh, NC 27602.', pronunciation: 'P O Box one forty-five, Raleigh, North Carolina, two, seven, six, zero, two' },
-        { text: 'Your rural route address appears as RR 2 Box 18, Madison, WI 53718.', pronunciation: 'R R two Box eighteen, Madison, Wisconsin, five, three, seven, one, eight' }
-    ],
     'MIXED ALPHANUMERIC IDENTIFIERS': [
         { text: 'Your case ID is F0L1X0E.', pronunciation: 'F, zero, L, one, X, zero, E' },
         { text: 'I\'m seeing your authentication token as B0D5V2N.', pronunciation: 'B, zero, D, five, V, two, N' },
@@ -69,6 +55,20 @@ const CHALLENGES = {
         { text: 'Your contact number is 800-555-1212.', pronunciation: 'eight, zero, zero, five, five, five, one, two, one, two' },
         { text: 'I have your number as 8005551212.', pronunciation: 'eight, zero, zero, five, five, five, one, two, one, two' },
         { text: 'Your international contact number is +44 20 7946 0018.', pronunciation: 'plus, four, four, two, zero, seven, nine, four, six, zero, zero, one, eight' }
+    ],
+    'ADDRESSES': [
+        { text: 'Your delivery address is 123 Pine St., Springfield, IL 62704.', pronunciation: 'one twenty-three Pine Street, Springfield, Illinois, six, two, seven, zero, four' },
+        { text: 'The service record shows your location as 4500 North Lake Shore Dr., Chicago, IL.', pronunciation: 'forty-five hundred North Lake Shore Drive, Chicago, Illinois' },
+        { text: 'I have your address as 101 E. 1st St., Apt. 2B, New York, NY 10009.', pronunciation: 'one oh one East First Street, apartment two B, New York, New York, one, zero, zero, zero, nine' },
+        { text: 'Your billing location is 608 Birch Ter., Fairview, FL 32067.', pronunciation: 'six oh eight Birch Terrace, Fairview, Florida, three, two, zero, six, seven' },
+        { text: 'The technician is scheduled to arrive at 269 Elm Pkwy., Lansing, TX 16261.', pronunciation: 'two sixty-nine Elm Parkway, Lansing, Texas, one, six, two, six, one' },
+        { text: 'Your profile lists your mailing address as 55 W. 3rd Ave., San Mateo, CA 94401.', pronunciation: 'fifty-five West Third Avenue, San Mateo, California, nine, four, four, zero, one' },
+        { text: 'I\'m confirming the address: 742 Evergreen Terrace, Springfield, OR 97403.', pronunciation: 'seven forty-two Evergreen Terrace, Springfield, Oregon, nine, seven, four, zero, three' },
+        { text: 'Your contact information includes 88 S. 21st Ct., Phoenix, AZ 85004.', pronunciation: 'eighty-eight South Twenty-first Court, Phoenix, Arizona, eight, five, zero, zero, four' },
+        { text: 'Please verify the location: 1 Queen St. W., Toronto, ON M5H 2N2.', pronunciation: 'one Queen Street West, Toronto, Ontario, M, five, H, two, N, two' },
+        { text: 'Your international address is listed as 10 Downing St., London SW1A 2AA, UK.', pronunciation: 'ten Downing Street, London, S, W, one, A, two, A, A, United Kingdom' },
+        { text: 'The PO Box on file is PO Box 145, Raleigh, NC 27602.', pronunciation: 'P O Box one forty-five, Raleigh, North Carolina, two, seven, six, zero, two' },
+        { text: 'Your rural route address appears as RR 2 Box 18, Madison, WI 53718.', pronunciation: 'R R two Box eighteen, Madison, Wisconsin, five, three, seven, one, eight' }
     ],
     'URLs / EMAILS / FILES': [
         { text: 'You can access the documentation at dg.com/API_v2.', pronunciation: 'D, G, dot, com, slash, A, P, I, underscore, V, two' },
