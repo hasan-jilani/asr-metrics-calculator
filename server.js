@@ -901,14 +901,31 @@ wss.on('connection', (ws) => {
       if (data.type === 'start' && data.text) {
         const text = data.text;
         const voices = data.voices || {};
+        const enabledProviders = data.enabledProviders || {
+          elevenlabs: true,
+          deepgram: true,
+          cartesia: true,
+          rime: true
+        };
         
-        // Start streaming from all providers concurrently with selected voices
-        Promise.all([
-          streamElevenLabsTTS(text, connectionId, voices.elevenlabs),
-          streamCartesiaTTS(text, connectionId, voices.cartesia),
-          streamDeepgramTTS(text, connectionId, voices.deepgram),
-          streamRimeTTS(text, connectionId, voices.rime)
-        ]).catch(err => {
+        // Build array of streaming promises for enabled providers only
+        const streamingPromises = [];
+        
+        // Always stream ElevenLabs and Deepgram
+        streamingPromises.push(streamElevenLabsTTS(text, connectionId, voices.elevenlabs));
+        streamingPromises.push(streamDeepgramTTS(text, connectionId, voices.deepgram));
+        
+        // Conditionally stream optional providers
+        if (enabledProviders.cartesia && voices.cartesia) {
+          streamingPromises.push(streamCartesiaTTS(text, connectionId, voices.cartesia));
+        }
+        
+        if (enabledProviders.rime && voices.rime) {
+          streamingPromises.push(streamRimeTTS(text, connectionId, voices.rime));
+        }
+        
+        // Start streaming from enabled providers concurrently
+        Promise.all(streamingPromises).catch(err => {
           console.error('Error starting TTS streams:', err);
         });
       }

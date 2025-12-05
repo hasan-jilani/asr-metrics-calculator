@@ -10,7 +10,7 @@ const CHALLENGES = {
         { text: 'The system lists your approval code as 8L2Z51O4.', pronunciation: 'eight, L, two, Z, five, one, O, four' },
         { text: 'Your authorization string is H3L0-2X9.', pronunciation: 'H, three, L, zero, dash, two, X, nine' },
         { text: 'The request hash shows as ZF1-98T-2B7.', pronunciation: 'Z, F, one, dash, nine, eight, T, dash, two, B, seven' },
-        { text: 'Your login token is displayed as A1B2C3D4.', pronunciation: 'A, one, B, two, C, three, D, four' },
+        { text: 'Your login token is displayed as H7Q4M2B9.', pronunciation: 'H, seven, Q, four, M, two, B, nine' },
         { text: 'The platform shows your renewal key as 22L0I55Z.', pronunciation: 'two, two, L, zero, I, five, five, Z' },
         { text: 'Your secure key is 5XQ27P.', pronunciation: 'five, X, Q, two, seven, P' }
     ],
@@ -19,13 +19,13 @@ const CHALLENGES = {
         { text: 'I found your product under SKU K700L2V.', pronunciation: 'K, seven, zero, zero, L, two, V' },
         { text: 'Your replacement component is listed as 443B90A.', pronunciation: 'four, four, three, B, nine, zero, A' },
         { text: 'The catalog shows product code AB-4500.', pronunciation: 'A, B, dash, four, five, zero, zero' },
-        { text: 'Your warranty part is referenced as RX1000.', pronunciation: 'R, X, one, zero, zero, zero' },
+        { text: 'Your warranty part is referenced as KP47A2.', pronunciation: 'K, P, four, seven, A, two' },
         { text: 'The inventory sheet lists lot number LOT20240315B.', pronunciation: 'L, O, T, two, zero, two, four, zero, three, one, five, B' },
-        { text: 'The spare component is marked as A12-B34-C56.', pronunciation: 'A, one, two, dash, B, three, four, dash, C, five, six' },
+        { text: 'The spare component is marked as K12-B34-C56.', pronunciation: 'K, one, two, dash, B, three, four, dash, C, five, six' },
         { text: 'The warehouse record shows item 45R-90X.', pronunciation: 'four, five, R, dash, nine, zero, X' },
         { text: 'Your filter element is labeled V3.2L.', pronunciation: 'V, three, point, two, L' },
-        { text: 'I have the component code XL-B2.', pronunciation: 'X, L, dash, B, two' },
-        { text: 'Your package identifier is BATCH-24-07-19.', pronunciation: 'B, A, T, C, H, dash, two, four, dash, zero, seven, dash, one, nine' },
+        { text: 'I have the component code XL-B2A.', pronunciation: 'X, L, dash, B, two, A' },
+        { text: 'Your package identifier is BATCH-24-07-19.', pronunciation: 'batch, twenty-four, zero, seven, nineteen' },
         { text: 'The part variation on file is H10-Z2.', pronunciation: 'H, one, zero, dash, Z, two' }
     ],
     'TRACKING & LOGISTICS CODES': [
@@ -36,9 +36,9 @@ const CHALLENGES = {
         { text: 'Your parcel ID appears as SHP2300456A.', pronunciation: 'S, H, P, two, three, zero, zero, four, five, six, A' },
         { text: 'The return authorization code is REF-2024-AB21.', pronunciation: 'R, E, F, dash, two, zero, two, four, dash, A, B, two, one' },
         { text: 'I\'m seeing your delivery code as EX123456789US.', pronunciation: 'E, X, one, two, three, four, five, six, seven, eight, nine, U, S' },
-        { text: 'Your pallet label is marked LX-45-003.', pronunciation: 'L, X, dash, four, five, dash, zero, zero, three' },
+        { text: 'Your pallet label is marked LOT-45-113.', pronunciation: 'lot, dash, forty-five, dash, one, thirteen' },
         { text: 'The freight record shows identifier FRG20240719X.', pronunciation: 'F, R, G, two, zero, two, four, zero, seven, one, nine, X' },
-        { text: 'Your logistics record includes 7771-9932-4410.', pronunciation: 'seven, seven, seven, one, dash, nine, nine, three, two, dash, four, four, one, zero' },
+        { text: 'Your production run is labeled SERIES-21-04-18.', pronunciation: 'series, twenty-one, zero, four, eighteen' },
         { text: 'I have the carrier reference as GX99P00412.', pronunciation: 'G, X, nine, nine, P, zero, zero, four, one, two' },
         { text: 'Your shipment tag is 2Z45X09E0012345678.', pronunciation: 'two, Z, four, five, X, zero, nine, E, zero, zero, one, two, three, four, five, six, seven, eight' }
     ],
@@ -48,7 +48,7 @@ const CHALLENGES = {
         { text: 'The contract amount is $5.7M.', pronunciation: 'five point seven million dollars' },
         { text: 'Your subscription fee is €18.50.', pronunciation: 'eighteen euros and fifty cents' },
         { text: 'The balance due is £1.25.', pronunciation: 'one pound and twenty-five pence' },
-        { text: 'Your account number is 021000021.', pronunciation: 'zero, two, one, zero, zero, zero, zero, two, one' },
+        { text: 'Your account number is 021000121.', pronunciation: 'zero, two, one, zero, zero, zero, one, two, one' },
         { text: 'The routing number on file is 11000015.', pronunciation: 'one, one, zero, zero, zero, zero, one, five' },
         { text: 'The applicable tax rate is 9.75%.', pronunciation: 'nine point seven five percent' },
         { text: 'Your discount is listed as 0.01%.', pronunciation: 'zero point zero one percent' },
@@ -57,18 +57,18 @@ const CHALLENGES = {
         { text: 'Your international contact number is +44 20 7946 0018.', pronunciation: 'plus, four, four, two, zero, seven, nine, four, six, zero, zero, one, eight' }
     ],
     'ADDRESSES': [
-        { text: 'Your delivery address is 123 Pine St., Springfield, IL 62704.', pronunciation: 'one twenty-three Pine Street, Springfield, Illinois, six, two, seven, zero, four' },
+        { text: 'Your delivery address is 123 Pine St., Springfield, MO 65807.', pronunciation: 'one twenty-three Pine Street, Springfield, Missouri, six, five, eight, zero, seven' },
         { text: 'The service record shows your location as 4500 North Lake Shore Dr., Chicago, IL.', pronunciation: 'forty-five hundred North Lake Shore Drive, Chicago, Illinois' },
-        { text: 'I have your address as 101 E. 1st St., Apt. 2B, New York, NY 10009.', pronunciation: 'one oh one East First Street, apartment two B, New York, New York, one, zero, zero, zero, nine' },
+        { text: 'I have your address as 101 East Pine St., New York, NY 10009.', pronunciation: 'one oh one East Pine Street, New York, New York, one, zero, zero, zero, nine' },
         { text: 'Your billing location is 608 Birch Ter., Fairview, FL 32067.', pronunciation: 'six oh eight Birch Terrace, Fairview, Florida, three, two, zero, six, seven' },
-        { text: 'The technician is scheduled to arrive at 269 Elm Pkwy., Lansing, TX 16261.', pronunciation: 'two sixty-nine Elm Parkway, Lansing, Texas, one, six, two, six, one' },
-        { text: 'Your profile lists your mailing address as 55 W. 3rd Ave., San Mateo, CA 94401.', pronunciation: 'fifty-five West Third Avenue, San Mateo, California, nine, four, four, zero, one' },
+        { text: 'The technician is scheduled to arrive at 269 Elm Pkwy., Lansing, MI 48911.', pronunciation: 'two sixty-nine Elm Parkway, Lansing, Michigan, four, eight, nine, one, one' },
+        { text: 'Your profile lists your mailing address as 55 West Oak Ave., San Mateo, CA 94401.', pronunciation: 'fifty-five West Oak Avenue, San Mateo, California, nine, four, four, zero, one' },
         { text: 'I\'m confirming the address: 742 Evergreen Terrace, Springfield, OR 97403.', pronunciation: 'seven forty-two Evergreen Terrace, Springfield, Oregon, nine, seven, four, zero, three' },
-        { text: 'Your contact information includes 88 S. 21st Ct., Phoenix, AZ 85004.', pronunciation: 'eighty-eight South Twenty-first Court, Phoenix, Arizona, eight, five, zero, zero, four' },
+        { text: 'Your contact information includes 88 Westlake Ct., Phoenix, AZ 85004.', pronunciation: 'eighty-eight Westlake Court, Phoenix, Arizona, eight, five, zero, zero, four' },
         { text: 'Please verify the location: 1 Queen St. W., Toronto, ON M5H 2N2.', pronunciation: 'one Queen Street West, Toronto, Ontario, M, five, H, two, N, two' },
         { text: 'Your international address is listed as 10 Downing St., London SW1A 2AA, UK.', pronunciation: 'ten Downing Street, London, S, W, one, A, two, A, A, United Kingdom' },
         { text: 'The PO Box on file is PO Box 145, Raleigh, NC 27602.', pronunciation: 'P O Box one forty-five, Raleigh, North Carolina, two, seven, six, zero, two' },
-        { text: 'Your rural route address appears as RR 2 Box 18, Madison, WI 53718.', pronunciation: 'R R two Box eighteen, Madison, Wisconsin, five, three, seven, one, eight' }
+        { text: 'Your rural route address appears as RR 4 Box 22, Concord, NH 03301.', pronunciation: 'R R four Box twenty-two, Concord, New Hampshire, zero, three, three, zero, one' }
     ],
     'URLs / EMAILS / FILES': [
         { text: 'You can access the documentation at dg.com/API_v2.', pronunciation: 'D, G, dot, com, slash, A, P, I, underscore, V, two' },
@@ -95,7 +95,7 @@ const CHALLENGES = {
         { text: 'The material listed is NaCl.', pronunciation: 'N, a, C, l' },
         { text: 'Your reagent code is NH4NO3.', pronunciation: 'N, H, four, N, O, three' },
         { text: 'Your material classification code is A2-B7.', pronunciation: 'A, two, dash, B, seven' },
-        { text: 'The compliance standard is ISO9001:2015.', pronunciation: 'I, S, O, nine, zero, zero, one, two, zero, one, five' },
+        { text: 'The compliance standard is ISO9001:2015.', pronunciation: 'I, S, O, nine, zero, zero, one, colon, two, zero, one, five' },
         { text: 'Your item is categorized under HS Code 8471.', pronunciation: 'eight, four, seven, one' }
     ]
 };
@@ -767,9 +767,15 @@ async function handleStreamComplete(provider) {
 
 // Check if all providers have finished buffering
 function checkAllBufferingComplete() {
-    const allProviders = ['elevenlabs', 'cartesia', 'deepgram', 'rime'];
+    // Get enabled providers based on toggle states
+    const cartesiaEnabled = document.getElementById('toggle-cartesia')?.checked ?? false;
+    const rimeEnabled = document.getElementById('toggle-rime')?.checked ?? false;
     
-    // Check if all providers are done (either buffered successfully or errored out)
+    const allProviders = ['elevenlabs', 'deepgram']; // Always enabled
+    if (cartesiaEnabled) allProviders.push('cartesia');
+    if (rimeEnabled) allProviders.push('rime');
+    
+    // Check if all enabled providers are done (either buffered successfully or errored out)
     const allComplete = allProviders.every(provider => {
         const state = providerState[provider];
         // Provider is complete if: buffered successfully OR (not streaming AND not buffering)
@@ -970,27 +976,44 @@ function startTTSTest(text) {
     
     currentText = text.trim();
     
-    // Collect voice IDs from selectors
-    const elevenlabsVoice = document.getElementById('elevenlabs-voice')?.value || 'Smxkoz0xiOoHo5WcSskf';
-    const cartesiaVoice = document.getElementById('cartesia-voice')?.value || 'f786b574-daa5-4673-aa0c-cbe3e8534c02';
-    const deepgramVoice = document.getElementById('deepgram-voice')?.value || 'aura-2-thalia-en';
-    const rimeVoice = document.getElementById('rime-voice')?.value || 'astra';
+    // Check which providers are enabled
+    const cartesiaEnabled = document.getElementById('toggle-cartesia')?.checked ?? false;
+    const rimeEnabled = document.getElementById('toggle-rime')?.checked ?? false;
     
-    // Reset state
+    // Collect voice IDs from selectors (only for enabled providers)
+    const elevenlabsVoice = document.getElementById('elevenlabs-voice')?.value || 'Smxkoz0xiOoHo5WcSskf';
+    const deepgramVoice = document.getElementById('deepgram-voice')?.value || 'aura-2-thalia-en';
+    
+    const voices = {
+        elevenlabs: elevenlabsVoice,
+        deepgram: deepgramVoice
+    };
+    
+    // Only include optional providers if enabled
+    if (cartesiaEnabled) {
+        voices.cartesia = document.getElementById('cartesia-voice')?.value || 'f786b574-daa5-4673-aa0c-cbe3e8534c02';
+    }
+    
+    if (rimeEnabled) {
+        voices.rime = document.getElementById('rime-voice')?.value || 'astra';
+    }
+    
+    // Reset state (only for enabled providers)
     resetProviderState();
     
     // Record start time for TTFA measurement
     startTime = Date.now();
     
-    // Send start message to server with voice IDs
+    // Send start message to server with voice IDs and enabled providers
     ws.send(JSON.stringify({
         type: 'start',
         text: currentText,
-        voices: {
-            elevenlabs: elevenlabsVoice,
-            cartesia: cartesiaVoice,
-            deepgram: deepgramVoice,
-            rime: rimeVoice
+        voices: voices,
+        enabledProviders: {
+            elevenlabs: true,
+            deepgram: true,
+            cartesia: cartesiaEnabled,
+            rime: rimeEnabled
         }
     }));
     
@@ -1043,6 +1066,58 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Populate challenge dropdown
     populateChallengeDropdown();
+    
+    // Provider toggle handlers
+    const toggleCartesia = document.getElementById('toggle-cartesia');
+    const toggleRime = document.getElementById('toggle-rime');
+    const cartesiaColumn = document.getElementById('cartesia-column');
+    const rimeColumn = document.getElementById('rime-column');
+    const providersSection = document.querySelector('.providers-section');
+    
+    function updateProviderLayout() {
+        const cartesiaVisible = toggleCartesia?.checked ?? false;
+        const rimeVisible = toggleRime?.checked ?? false;
+        
+        // Show/hide columns
+        if (cartesiaColumn) {
+            cartesiaColumn.classList.toggle('hidden', !cartesiaVisible);
+        }
+        if (rimeColumn) {
+            rimeColumn.classList.toggle('hidden', !rimeVisible);
+        }
+        
+        // Update grid columns based on visible providers
+        // Always have ElevenLabs and Deepgram (2), plus optional Cartesia and Rime
+        const visibleCount = 2 + (cartesiaVisible ? 1 : 0) + (rimeVisible ? 1 : 0);
+        
+        if (providersSection) {
+            providersSection.style.gridTemplateColumns = `repeat(${visibleCount}, 1fr)`;
+        }
+    }
+    
+    // Initialize layout
+    updateProviderLayout();
+    
+    // Add event listeners for toggles
+    if (toggleCartesia) {
+        toggleCartesia.addEventListener('change', () => {
+            updateProviderLayout();
+            // Reset Cartesia state when hidden
+            if (!toggleCartesia.checked) {
+                resetSingleProviderState('cartesia');
+            }
+        });
+    }
+    
+    if (toggleRime) {
+        toggleRime.addEventListener('change', () => {
+            updateProviderLayout();
+            // Reset Rime state when hidden
+            if (!toggleRime.checked) {
+                resetSingleProviderState('rime');
+            }
+        });
+    }
     
     // Challenge select change
     const challengeSelect = document.getElementById('challenge-select');
