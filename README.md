@@ -21,8 +21,11 @@ A full-stack web application to compare Text-to-Speech (TTS) providers for chall
    CARTESIA_API_KEY=your_key_here
    DEEPGRAM_API_KEY=your_key_here
    RIME_API_KEY=your_key_here
+   OPENAI_API_KEY=your_key_here
    PORT=3000
    ```
+   
+   **Note**: `OPENAI_API_KEY` is optional and only needed for the "Generate Random Challenge" feature.
 4. Start the server: `npm start`
 5. Open http://localhost:3000 in your browser
 
