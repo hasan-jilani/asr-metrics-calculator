@@ -86,15 +86,11 @@ const CHALLENGES = {
     ],
     'TECHNICAL CODES': [
         { text: 'You\'re currently running version v3.5 SP1.', pronunciation: 'V, three, point, five, S, P, one' },
-        { text: 'Your system build is listed as Build 14.2.7.', pronunciation: 'fourteen, point, two, point, seven' },
-        { text: 'The release installed is Release-2024.07.31-beta.', pronunciation: 'Release, dash, two, zero, two, four, point, zero, seven, point, three, one, dash, beta' },
-        { text: 'Your firmware version shows as FW-2.9.14.', pronunciation: 'F, W, dash, two, point, nine, point, one, four' },
-        { text: 'The installed patch is Patch-1.0.3.', pronunciation: 'Patch, dash, one, point, zero, point, three' },
         { text: 'Your chemical identifier is H2O2.', pronunciation: 'H, two, O, two' },
         { text: 'The solution is labeled C6H12O6.', pronunciation: 'C, six, H, one, two, O, six' },
         { text: 'The material listed is NaCl.', pronunciation: 'N, a, C, l' },
         { text: 'Your reagent code is NH4NO3.', pronunciation: 'N, H, four, N, O, three' },
-        { text: 'Your material classification code is A2-B7.', pronunciation: 'A, two, dash, B, seven' },
+        { text: 'Your material classification code is C2-B7.', pronunciation: 'C, two, dash, B, seven' },
         { text: 'The compliance standard is ISO9001:2015.', pronunciation: 'I, S, O, nine, zero, zero, one, colon, two, zero, one, five' },
         { text: 'Your item is categorized under HS Code 8471.', pronunciation: 'eight, four, seven, one' }
     ]
@@ -1176,6 +1172,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // Custom text input - clear pre-set challenge when user types
+    // Debounce timer for pronunciation generation
+    let pronunciationDebounceTimer = null;
+    
     if (customText) {
         customText.addEventListener('input', (e) => {
             const textValue = e.target.value.trim();
@@ -1188,14 +1187,65 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 // Clear pre-set challenge when custom text is entered
                 challengeSelect.value = '';
-                // Hide pronunciation guide
+                
+                // Clear previous debounce timer
+                if (pronunciationDebounceTimer) {
+                    clearTimeout(pronunciationDebounceTimer);
+                }
+                
+                // Debounce pronunciation generation (wait 3 seconds after user stops typing)
+                pronunciationDebounceTimer = setTimeout(async () => {
+                    try {
+                        // Show loading state
+                        if (pronunciationGuide) {
+                            pronunciationGuide.style.display = 'block';
+                            if (pronunciationText) {
+                                pronunciationText.textContent = 'Generating pronunciation...';
+                            }
+                        }
+                        
+                        const response = await fetch('/api/generate-pronunciation', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ text: textValue })
+                        });
+                        
+                        if (response.ok) {
+                            const data = await response.json();
+                            if (data.pronunciation && pronunciationText) {
+                                pronunciationText.textContent = data.pronunciation;
+                                if (pronunciationGuide) {
+                                    pronunciationGuide.style.display = 'block';
+                                }
+                            }
+                        } else {
+                            // If API fails, just hide the guide (don't show error to user)
+                            if (pronunciationGuide) {
+                                pronunciationGuide.style.display = 'none';
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Error generating pronunciation:', error);
+                        // Silently fail - just hide the guide
+                        if (pronunciationGuide) {
+                            pronunciationGuide.style.display = 'none';
+                        }
+                    }
+                }, 3000); // Wait 3 seconds after user stops typing
+            } else if (!textValue) {
+                // Custom text was cleared - reset providers and hide pronunciation
+                if (currentText) {
+                    resetProviderState();
+                }
                 if (pronunciationGuide) {
                     pronunciationGuide.style.display = 'none';
                 }
-            } else if (!textValue) {
-                // Custom text was cleared - reset providers
-                if (currentText) {
-                    resetProviderState();
+                // Clear any pending pronunciation request
+                if (pronunciationDebounceTimer) {
+                    clearTimeout(pronunciationDebounceTimer);
+                    pronunciationDebounceTimer = null;
                 }
             }
         });

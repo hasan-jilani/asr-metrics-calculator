@@ -1087,6 +1087,91 @@ Generate a NEW challenge (different from the example) in the same style:`;
   }
 });
 
+// Generate pronunciation for custom text using OpenAI
+app.post('/api/generate-pronunciation', async (req, res) => {
+  const openaiApiKey = process.env.OPENAI_API_KEY;
+  const { text } = req.body;
+  
+  if (!openaiApiKey) {
+    return res.status(500).json({ 
+      error: 'OpenAI API key not configured' 
+    });
+  }
+
+  if (!text || !text.trim()) {
+    return res.status(400).json({ 
+      error: 'Text is required' 
+    });
+  }
+
+  try {
+    const prompt = `Given the following text, provide the expected pronunciation guide showing EXACTLY how a human would speak the alphanumeric expression(s) in the text.
+
+Text: "${text.trim()}"
+
+Respond with a JSON object containing only the "pronunciation" field (you can omit the "text" field since we already have it).`;
+
+    const response = await axios.post(
+      'https://api.openai.com/v1/chat/completions',
+      {
+        model: 'gpt-4o-mini',
+        messages: [
+          {
+            role: 'system',
+            content: 'You are a helpful assistant that generates text-to-speech evaluation challenges and pronunciation guides. Always respond with VALID JSON ONLY, with no additional commentary or text outside the JSON.\n\nYour job is to generate realistic, conversational challenge sentences that include complex alphanumeric elements commonly encountered in customer-service or enterprise scenarios.\n\nThe generated challenge must be compatible with ANY of the following categories:\n\n1. Mixed Alphanumeric Identifiers (e.g., F0L1X0E, O30DV87, A1B2C3D4)\n2. SKUs / Product Codes (e.g., 326DART4, AB-4500, V3.2L)\n3. Tracking & Logistics Numbers (e.g., 1Z9999E90000000057, DT120034567890, TX-790-B4)\n4. Financial & Numeric Formats (currency amounts, routing numbers, account numbers, percentages)\n5. Addresses (full addresses with street names, ordinals, directionals, units, cities, states, ZIP/postal codes)\n6. URLs, Emails, API Paths, and Filenames (e.g., support.dg.com/v3/login, help@barclays.co.uk, Invoice_2024-07-15.csv)\n7. Technical Codes (software versions, build numbers, chemical formulas, classification codes)\n8. Phone Numbers & Extensions\n\nEach response must:\n- Contain a single JSON object with two fields:\n    • "text": a natural-sounding sentence that includes one or more alphanumeric expressions.\n    • "pronunciation": a comma-separated pronunciation guide showing EXACTLY how a human would speak the alphanumeric expression(s).\n\nPRONUNCIATION RULES:\n• Letters are spoken individually (e.g., "A", "B", "C")\n• Digits are spoken individually ("one", "zero", "five")\n• Hyphens in identifiers (codes, SKUs, tracking numbers, filenames, version strings, URLs) are spoken as "dash"\n• Hyphens in natural-language numbers (dates, phone numbers, addresses) are NOT spoken\n• Underscores → "underscore"\n• Periods → "dot"\n• Slashes → "slash"\n• @ → "at"\n• + in emails or identifiers → "plus"\n• Postal codes spoken digit-by-digit\n• Addresses must be spoken naturally ("one twenty-three Pine Street, Springfield, Illinois")\n• Currency amounts must use units ("twelve dollars and ninety-nine cents", "eighteen euros and fifty cents", "one pound and twenty-five pence", "five point seven million dollars")\n• Percentages must end with "percent"\n\nRESPONSE FORMAT:\n{\n  "text": "<sentence>",\n  "pronunciation": "<spoken form>"\n}\n\nWhen generating pronunciation for existing text, you may omit the "text" field and only return "pronunciation".'
+          },
+          {
+            role: 'user',
+            content: prompt
+          }
+        ],
+        temperature: 0.3,
+        max_tokens: 200
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${openaiApiKey}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+
+    const content = response.data.choices[0].message.content.trim();
+    let result;
+    
+    // Try to parse JSON (handle cases where it's wrapped in markdown code blocks)
+    try {
+      result = JSON.parse(content);
+    } catch (parseError) {
+      // Try extracting JSON from markdown code blocks
+      const jsonMatch = content.match(/```(?:json)?\s*(\{[\s\S]*\})\s*```/);
+      if (jsonMatch) {
+        result = JSON.parse(jsonMatch[1]);
+      } else {
+        throw new Error('Invalid JSON response from OpenAI');
+      }
+    }
+
+    if (!result.pronunciation) {
+      throw new Error('Missing pronunciation field in response');
+    }
+
+    console.log('Pronunciation generated for custom text:', result);
+    res.json(result);
+  } catch (error) {
+    console.error('Error generating pronunciation:', error);
+    if (error.response) {
+      res.status(error.response.status || 500).json({ 
+        error: error.response.data?.error?.message || 'Failed to generate pronunciation' 
+      });
+    } else {
+      res.status(500).json({ 
+        error: 'Failed to generate pronunciation' 
+      });
+    }
+  }
+});
+
 // Serve index.html for root route
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
